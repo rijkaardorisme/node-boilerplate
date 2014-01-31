@@ -20,15 +20,15 @@ To start a project:
 
 on Linux, BSD and OS X:
 
-		./init
+		./init.sh
 
 You might need to make the file executable before you can run it by doing:
 
-		chmod a+x init
+		chmod a+x init.sh
 
 on Windows:
 
-		.\init
+		.\init.bat
 
 This will copy down all of the boilerplate files, organize them appropriately and init a fresh new git repository within which you can build your next big thing.
 
