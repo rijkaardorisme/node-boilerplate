@@ -52,6 +52,3 @@ git add .
 
 echo "Setting up dependencies from NPM..."
 npm install
-
-echo "Removing setup file..."
-rm ini.sh

@@ -1,4 +1,4 @@
-# Node Boilerplate 3.0
+# Node Boilerplate
 
 *This is an upgraded version of [Node Boilerplate Version 2](https://github.com/robrighter/node-boilerplate) by Rob Righter, tested with Node v0.10.22. This version include other awesome stuffs like PureCSS, Normalize.css, Modernizr, Font-Awesome Icons and also recent versions of the boilerplate dependencies (jade has been replaced by ejs).*
 
