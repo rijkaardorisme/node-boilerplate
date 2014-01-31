@@ -1,1 +1,16 @@
+# Ignore JetBrains IDEs .idea directory
+########################################
+.idea
+#
+# Ignore Windows and OS X system files
+#######################################
+.DS_Store
+Desktop.ini
+#
+# Ignore rule for the setup files
+##################################
+init.*
+#
+# Ignore node_modules directory
+################################
 node_modules

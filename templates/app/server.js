@@ -1,89 +1,109 @@
-//setup Dependencies
-var connect = require('connect')
-    , express = require('express')
-    , io = require('socket.io')
-    , port = (process.env.PORT || 8081);
 
-//Setup Express
-var server = express.createServer();
-server.configure(function(){
-    server.set('views', __dirname + '/views');
-    server.set('view options', { layout: false });
-    server.use(connect.bodyParser());
-    server.use(express.cookieParser());
-    server.use(express.session({ secret: "shhhhhhhhh!"}));
-    server.use(connect.static(__dirname + '/static'));
-    server.use(server.router);
+/**
+ * Module dependencies
+ */
+var connect		= require('connect')
+  , express		= require('express')
+  , app			= express()
+  , httpd		= require('http').createServer(app)
+  , io			= require('socket.io')
+  , routes		= require('./routes')
+  , config		= require('./config')
+  ;
+
+/**
+ * Express configuration
+ */
+app.configure(function(){
+	app.set('views', __dirname + '/views');
+	app.set('view engine', 'ejs');
+	app.use(express.logger('dev'));
+	app.use(connect.bodyParser());
+	app.use(express.cookieParser());
+	app.use(express.session({ secret: config.session_key }));
+	app.use(connect.static(__dirname + '/static'));
+	app.use(app.router);
+
+	app.use(function (error, req, res, next) {
+		if(error instanceof NotFound) {
+			res.render('app/404', {
+				locals: {
+					title: '404'
+				,	description: ''
+				,	author: ''
+				,	analyticssiteid: 'XXXXXXX'
+				,	status: 404
+				}
+			});
+		} else {
+			res.render('app/500', {
+				locals: {
+					title: '500'
+				,	description: ''
+				,	author: ''
+				,	analyticssiteid: 'XXXXXXX'
+				,	error: error
+				,	status: 500
+				}
+			});
+		}
+	});
 });
 
-//setup the errors
-server.error(function(err, req, res, next){
-    if (err instanceof NotFound) {
-        res.render('404.jade', { locals: { 
-                  title : '404 - Not Found'
-                 ,description: ''
-                 ,author: ''
-                 ,analyticssiteid: 'XXXXXXX' 
-                },status: 404 });
-    } else {
-        res.render('500.jade', { locals: { 
-                  title : 'The Server Encountered an Error'
-                 ,description: ''
-                 ,author: ''
-                 ,analyticssiteid: 'XXXXXXX'
-                 ,error: err 
-                },status: 500 });
-    }
-});
-server.listen( port);
-
-//Setup Socket.IO
-var io = io.listen(server);
-io.sockets.on('connection', function(socket){
-  console.log('Client Connected');
-  socket.on('message', function(data){
-    socket.broadcast.emit('server_message',data);
-    socket.emit('server_message',data);
-  });
-  socket.on('disconnect', function(){
-    console.log('Client Disconnected.');
-  });
+app.configure('development', function(){
+	app.set('port', process.env.PORT || 8081);
+	app.use(express.errorHandler());
 });
 
-
-///////////////////////////////////////////
-//              Routes                   //
-///////////////////////////////////////////
-
-/////// ADD ALL YOUR ROUTES HERE  /////////
-
-server.get('/', function(req,res){
-  res.render('index.jade', {
-    locals : { 
-              title : 'Your Page Title'
-             ,description: 'Your Page Description'
-             ,author: 'Your Name'
-             ,analyticssiteid: 'XXXXXXX' 
-            }
-  });
+app.configure('test', function(){
+	app.set('port', process.env.PORT || 8082);
 });
 
-
-//A Route for Creating a 500 Error (Useful to keep around)
-server.get('/500', function(req, res){
-    throw new Error('This is a 500 Error');
+app.configure('production', function(){
+	app.set('port', process.env.PORT || 8083);
 });
 
-//The 404 Route (ALWAYS Keep this as the last route)
-server.get('/*', function(req, res){
-    throw new NotFound;
+httpd.listen(app.get('port'));
+
+/**
+ * Socket.IO server
+ */
+var io = io.listen(httpd);
+
+io.sockets.on('connection', function (socket) {
+	console.log('Client connected');
+
+	socket.on('message', function (data) {
+		socket.broadcast.emit('server_message', data);
+		socket.emit('server_message', data);
+	});
+
+	socket.on('disconnect', function () {
+		console.log('Client disconnected.');
+	});
 });
 
-function NotFound(msg){
-    this.name = 'NotFound';
-    Error.call(this, msg);
-    Error.captureStackTrace(this, arguments.callee);
+/**
+ * Routes definitions
+ */
+
+// Homepage
+app.get('/', routes.index);
+
+// A Route for Creating a 500 Error (Useful to keep around)
+app.get('/500', function (req, res) {
+	throw new Error('The server encountered an error. We are aware of this issue and are working to get it fixed.');
+});
+
+// The 404 Route (ALWAYS Keep this as the last route)
+app.get('/*', function (req, res) {
+	throw new NotFound;
+});
+
+function NotFound (msg) {
+	this.name = 'NotFound';
+	Error.call(this, msg);
+	Error.captureStackTrace(this, arguments.callee);
 }
 
-
-console.log('Listening on http://0.0.0.0:' + port );
+console.log('Listening on http://0.0.0.0:' + app.get("port") );
