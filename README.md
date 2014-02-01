@@ -1,6 +1,6 @@
 # Node Boilerplate
 
-*This is an upgraded version of [Node Boilerplate Version 2](https://github.com/robrighter/node-boilerplate) by Rob Righter, tested with Node v0.10.22. This version include other awesome stuffs like PureCSS, Normalize.css, Modernizr, Font-Awesome Icons and also recent versions of the boilerplate dependencies (jade has been replaced by ejs).*
+*This is an upgraded version of [Node Boilerplate Version 2](https://github.com/robrighter/node-boilerplate) by Rob Righter, tested with Node v0.10.18. This version include other awesome stuffs like PureCSS, Normalize.css, Modernizr, Font-Awesome Icons and also recent versions of the boilerplate dependencies (jade has been replaced by ejs).*
 
 node-boilerplate takes html-boilerplate, express, connect, ejs, and Socket.IO and organizes them into a ready to use website project. It's a fast way to get working on your Node website without having to worry about the setup. It takes care of all the boring parts, like setting up your views, 404 page, 500 page, getting the modules organized, etc...
 
@@ -15,7 +15,7 @@ Node Boilerplate has 4 goals:
 
 To start a project:
 
-		git clone git://github.com/rijkaardorisme/node-boilerplate.git mynewproject
+		git clone https://github.com/robrighter/node-boilerplate.git mynewproject
 		cd mynewproject
 
 on Linux, BSD and OS X:
