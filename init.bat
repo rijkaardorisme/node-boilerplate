@@ -50,8 +50,5 @@ echo "Initializing empty git repository..."
 git init
 git add .
 
-echo "Installing dependencies..."
-npm install
-
-echo "Removing setup file..."
-del init.bat
+echo "Install dependencies and remove setup file..."
+npm install && del init.bat

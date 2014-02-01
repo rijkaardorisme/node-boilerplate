@@ -1,6 +1,6 @@
 # Node Boilerplate
 
-*This is an upgraded version of [Node Boilerplate Version 2](https://github.com/robrighter/node-boilerplate) by Rob Righter, tested with Node v0.10.18. This version include other awesome stuffs like PureCSS, Normalize.css, Modernizr, Font-Awesome Icons and also recent versions of the boilerplate dependencies (jade has been replaced by ejs).*
+*This is an upgraded version of [Node Boilerplate Version 2](https://github.com/robrighter/node-boilerplate) by [Rob Righter](https://github.com/robrighter), tested with Node v0.10.18. This version include other awesome stuffs like PureCSS, Normalize.css, Modernizr, Font-Awesome Icons and also recent versions of the boilerplate dependencies (jade has been replaced by ejs).*
 
 node-boilerplate takes html-boilerplate, express, connect, ejs, and Socket.IO and organizes them into a ready to use website project. It's a fast way to get working on your Node website without having to worry about the setup. It takes care of all the boring parts, like setting up your views, 404 page, 500 page, getting the modules organized, etc...
 
@@ -46,11 +46,13 @@ Go to http://0.0.0.0:8081 and click on the send message button to see socket.io 
 4. Includes 500 page
 5. Separate application and user views
 6. Dedicated routes directory
-7. config.json file to easily manage parameters
+7. config.json file to easily manage parameters such as session keys, database credentials and more.
 
 ## Adding modules:
 
-Update the package.json file to include new module dependencies and run 'npm install'.
+Update the package.json file to include new module dependencies and run 
+
+		npm install
 
 **If you have a different set of default modules that you like to use, the structure is setup such that you can fork the project and replace the module dependencies outlined in the ./templates/apps/package.json file to best fit your needs and the initproject.sh script will initialize projects with your new set of modules.**
 

@@ -50,8 +50,5 @@ echo "Initializing empty git repository..."
 git init
 git add .
 
-echo "Setting up dependencies from NPM..."
-npm install
-
-echo "Removing setup file..."
-rm init.sh
+echo "Install dependencies and remove setup file..."
+npm install && rm init.sh
