@@ -52,3 +52,6 @@ git add .
 
 echo "Installing dependencies..."
 npm install
+
+echo "Removing setup file..."
+del init.bat
