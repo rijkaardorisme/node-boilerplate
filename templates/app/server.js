@@ -87,7 +87,7 @@ io.sockets.on('connection', function (socket) {
  * Routes definitions
  */
 
-// Homepage
+// Homepage route
 app.get('/', routes.index);
 
 // A Route for Creating a 500 Error (Useful to keep around)
@@ -106,4 +106,4 @@ function NotFound (msg) {
 	Error.captureStackTrace(this, arguments.callee);
 }
 
-console.log('Listening on http://0.0.0.0:' + app.get("port") );
+console.log('Listening on http://0.0.0.0:' + app.get("port"));
