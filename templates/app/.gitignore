@@ -16,9 +16,7 @@ $RECYCLE.BIN/
 .DS_Store
 
 # Node Boilerplate setup files
-
 init.*
 
 # node_modules directory
-
 node_modules
