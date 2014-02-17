@@ -11,6 +11,8 @@ var connect		= require('connect')
   , config		= require('./config')
   ;
 
+SESSION_KEY	= config.session_key;
+
 /**
  * Express configuration
  */
@@ -20,12 +22,13 @@ app.configure(function(){
 	app.use(express.logger('dev'));
 	app.use(connect.bodyParser());
 	app.use(express.cookieParser());
-	app.use(express.session({ secret: config.session_key }));
+	app.use(express.session({ secret: SESSION_KEY }));
 	app.use(connect.static(__dirname + '/static'));
 	app.use(app.router);
 
+	// Error handling middleware
 	app.use(function (error, req, res, next) {
-		if(error instanceof NotFound) {
+		if (error instanceof NotFound) {
 			res.render('app/404', {
 				locals: {
 					title: '404'
@@ -50,16 +53,16 @@ app.configure(function(){
 	});
 });
 
-app.configure('development', function(){
+app.configure('development', function() {
 	app.set('port', process.env.PORT || 8081);
 	app.use(express.errorHandler());
 });
 
-app.configure('test', function(){
+app.configure('test', function() {
 	app.set('port', process.env.PORT || 8082);
 });
 
-app.configure('production', function(){
+app.configure('production', function() {
 	app.set('port', process.env.PORT || 8083);
 });
 
@@ -95,7 +98,7 @@ app.get('/500', function (req, res) {
 	throw new Error('The server encountered an error. We are aware of this issue and are working to get it fixed.');
 });
 
-// The 404 Route (ALWAYS Keep this as the last route)
+// The 404 Route (ALWAYS keep this as the last route)
 app.get('/*', function (req, res) {
 	throw new NotFound;
 });
@@ -107,3 +110,6 @@ function NotFound (msg) {
 }
 
 console.log('Listening on http://0.0.0.0:' + app.get("port"));
+
+/**
+ */
